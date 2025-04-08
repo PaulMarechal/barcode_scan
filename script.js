@@ -28,13 +28,13 @@ let lastCode = "";
 
 // Find user pref into cookies 
 function getUserSettings() {
-  const saved = localStorage.getItem("userSettings");
-  return saved ? JSON.parse(saved) : {
-    calories: false,
-    additifs: false,
-    allergenes: false,
-    eco: false,
-  };
+    const saved = localStorage.getItem("userSettings");
+    return saved ? JSON.parse(saved) : {
+        calories: false,
+        additifs: false,
+        allergenes: false,
+        eco: false,
+    };
 }
 
 function saveUserSettings(settings) {
