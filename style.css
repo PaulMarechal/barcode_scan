@@ -1,4 +1,104 @@
 body { margin: 0; font-family: sans-serif; text-align: center; background: #f2f2f2;overflow: hidden;}
+  
+/* En-tête avec bouton Modifier */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em 1.5em;
+    background-color: #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+#open-settings {
+    padding: 0.6em 1.2em;
+    background: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+#open-settings:hover {
+    background: #0056b3;
+}
+
+/* Modale */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+/* Masquée par défaut */
+.hidden {
+    display: none;
+}
+
+/* Contenu de la modale */
+.modal-content {
+    background: #fff;
+    padding: 2em;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+    animation: popin 0.2s ease-out;
+}
+
+/* Animation d’entrée */
+@keyframes popin {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Checkboxes */
+#settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    margin-bottom: 1.5em;
+}
+
+#settings-form label {
+    font-size: 1.1em;
+}
+
+#settings-form input[type="checkbox"] {
+    margin-right: 0.5em;
+}
+
+/* Boutons dans la modale */
+.modal-content button {
+    padding: 0.5em 1em;
+    margin-top: 0.5em;
+    font-size: 1em;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#settings-form button[type="submit"] {
+    background: #28a745;
+    color: white;
+}
+
+#close-settings {
+    background: #dc3545;
+    color: white;
+    margin-left: 1em;
+}
+  
+/* Container */
 #scanner-container { 
     width: 90vw;
     height: 20vh;
@@ -8,12 +108,12 @@ body { margin: 0; font-family: sans-serif; text-align: center; background: #f2f2
 }
   
 .center-icon {
-  position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
-  margin: auto;
-  opacity: 0.5;
-  z-index: 2;
-  pointer-events: none;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    margin: auto;
+    opacity: 0.5;
+    z-index: 2;
+    pointer-events: none;
 }
 
 #scanner-container video{
@@ -80,13 +180,14 @@ body { margin: 0; font-family: sans-serif; text-align: center; background: #f2f2
     width: fit-content;
     margin: auto;
     margin-top: -2vh;
-    bottom: -0.5vh;
+    bottom: 4.5vh;
     padding: 5px 10px;
     margin: auto;
-    margin-top: -2.5vh;
     border: 1px solid rgb(135 135 135 / 48%);
     position: relative;
     z-index: 9;
+    width: 12vh;
+    left: -27vw;
 }
 
 .infos-prod-text{
@@ -142,3 +243,4 @@ body { margin: 0; font-family: sans-serif; text-align: center; background: #f2f2
     background: #ef463ebf;
     border: 2px solid #dc362e;
 }
+
