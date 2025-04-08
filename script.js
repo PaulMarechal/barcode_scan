@@ -1,5 +1,4 @@
 const FIELDS = [
-    { id: 'code', label: 'Code', defaultVisible: false },
     { id: 'name', label: 'Nom', defaultVisible: true },
     { id: 'countries', label: 'Pays', defaultVisible: true },
     { id: 'manu', label: 'Fabriqué en', defaultVisible: true },
@@ -8,11 +7,31 @@ const FIELDS = [
     { id: 'us', label: 'Produit américain ?', defaultVisible: true },
     { id: 'allergens', label: 'Allergènes', defaultVisible: false },
     { id: 'additives', label: 'Additifs', defaultVisible: false },
-    { id: 'controversial', label: 'Ingrédients controversés', defaultVisible: false },
+    { id: 'ingredients_analysis', label: 'Ingrédients controversés', defaultVisible: false },
     { id: 'nova', label: 'Score NOVA', defaultVisible: false },
     { id: 'nutriscore', label: 'Nutri-Score', defaultVisible: false },
-    { id: 'indicators', label: 'Indicateurs (sucre, huile de palme, etc.)', defaultVisible: false }
-];
+    { id: 'nutrient_levels', label: 'Indicateurs (sucre, sel...)', defaultVisible: false },
+    { id: 'ecoscore_grade', label: 'Éco-Score', defaultVisible: false },
+    { id: 'carbon_footprint', label: 'Empreinte carbone', defaultVisible: false },
+    { id: 'packaging_tags', label: 'Emballage', defaultVisible: false },
+    { id: 'recycling', label: 'Recyclable ?', defaultVisible: false },
+    { id: 'alcohol_100g', label: 'Alcool / 100g', defaultVisible: false },
+    { id: 'energy-kcal_100g', label: 'Énergie (kcal/100g)', defaultVisible: false },
+    { id: 'fat_100g', label: 'Lipides / 100g', defaultVisible: false },
+    { id: 'saturated-fat_100g', label: 'Graisses saturées / 100g', defaultVisible: false },
+    { id: 'carbohydrates_100g', label: 'Glucides / 100g', defaultVisible: false },
+    { id: 'sugars_100g', label: 'Sucres / 100g', defaultVisible: false },
+    { id: 'fiber_100g', label: 'Fibres / 100g', defaultVisible: false },
+    { id: 'proteins_100g', label: 'Protéines / 100g', defaultVisible: false },
+    { id: 'salt_100g', label: 'Sel / 100g', defaultVisible: false },
+    { id: 'water_100g', label: 'Eau / 100g', defaultVisible: false },
+    { id: 'vitamin-c_100g', label: 'Vitamine C / 100g', defaultVisible: false },
+    { id: 'vitamin-b12_100g', label: 'Vitamine B12 / 100g', defaultVisible: false },
+    { id: 'zinc_100g', label: 'Zinc / 100g', defaultVisible: false },
+    { id: 'cholesterol_100g', label: 'Cholestérol / 100g', defaultVisible: false },
+    { id: 'calcium_100g', label: 'Calcium / 100g', defaultVisible: false },
+    { id: 'ingredients_that_may_be_from_palm_oil_n', label: 'Huile de palme (suspectée)', defaultVisible: false }
+  ];
   
 function getPreferences() {
     const prefs = localStorage.getItem("usor_settings");
@@ -78,6 +97,7 @@ function estProduitUS(tagsPays, fabrication, origine, marque, code, isWikidataUS
 }
 
 async function verifierWikidataMarqueMultiple(marques) {
+    console.log(marques)
     const requetes = marques.map(async (marque) => {
         const query = `PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -132,6 +152,7 @@ Quagga.onDetected(async data => {
         .then(async data => {
             if (data.status === 1) {
                 const prod = data.product;
+                console.log(prod);
                 const name = prod.product_name || prod.product_name_es || "Nom non spécifié";
                 const manu = prod.manufacturing_places || "Non spécifié";
                 const countries = prod.countries_tags || [];
@@ -174,13 +195,80 @@ Quagga.onDetected(async data => {
                 
                 if (selectedFields.includes("controversial"))
                     infosHTML += `<p class="text-display-style"><span class="title-text">Controversés :</span><span class="result-text">${prod.ingredients_analysis_tags?.join(", ") || "Non détecté"}</span></p>`;
+
+                if (selectedFields.includes("vegan"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Nutri-Score :</span><span class="result-text">${prod.vegan?.toUpperCase() || "Non disponible"}</span></p>`;
+                
+                if (selectedFields.includes("vegetarian"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Nutri-Score :</span><span class="result-text">${prod.vegetarian?.toUpperCase() || "Non disponible"}</span></p>`;
                 
                 if (selectedFields.includes("nova"))
-                    infosHTML += `<p class="text-display-style"><span class="title-text">NOVA :</span><span class="result-text">${prod.nova_group || "Non disponible"}</span></p>`;
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Score NOVA :</span><span class="result-text">${prod.nova_group || "Non disponible"}</span></p>`;
                 
                 if (selectedFields.includes("nutriscore"))
                     infosHTML += `<p class="text-display-style"><span class="title-text">Nutri-Score :</span><span class="result-text">${prod.nutriscore_grade?.toUpperCase() || "Non disponible"}</span></p>`;
                 
+                if (selectedFields.includes("ingredients_that_may_be_from_palm_oil_n")) {
+                    infosHTML += `<p class="text-display-style">
+                        <span class="title-text">Huile de palme (suspectée) :</span>
+                        <span class="result-text">${prod.ingredients_that_may_be_from_palm_oil_n > 0 ? "Oui" : "Non"}</span>
+                    </p>`;
+                }
+                if (selectedFields.includes("ecoscore_grade"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Éco-Score :</span><span class="result-text">${prod.ecoscore_grade?.toUpperCase() || "Non disponible"}</span></p>`;
+                
+                if (selectedFields.includes("carbon_footprint"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Empreinte carbone :</span><span class="result-text">${prod['carbon-footprint-from-known-ingredients_100g'] || "Non disponible"} g CO₂ / 100g</span></p>`;
+                
+                if (selectedFields.includes("packaging_tags"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Emballage :</span><span class="result-text">${(prod.packaging_tags || []).join(", ") || "Non spécifié"}</span></p>`;
+                
+                if (selectedFields.includes("recycling"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Recyclable ?</span><span class="result-text">${prod.packaging_recycling_tags?.includes('en:recycle') ? "Oui" : "Non"}</span></p>`;
+                
+                if (selectedFields.includes("cholesterol_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Cholestérol / 100g :</span><span class="result-text">${prod.nutriments?.cholesterol_100g ?? "Non disponible"}</span></p>`;
+                
+                if (selectedFields.includes("calcium_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.calcium_100g ?? "Non disponible"}</span></p>`;
+                           
+                if (selectedFields.includes("ingredients_analysis"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.ingredients_analysis ?? "Non disponible"}</span></p>`;
+                
+                if (selectedFields.includes("nutrient_levels"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.nutrient_levels ?? "Non disponible"}</span></p>`;
+                
+                if (selectedFields.includes("alcohol_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.alcohol_100g ?? "Non disponible"}</span></p>`;
+                
+                if (selectedFields.includes("energy-kcal_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.energy-kcal_100g ?? "Non disponible"}</span></p>`;
+                
+                if (selectedFields.includes("fat_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.fat_100g ?? "Non disponible"}</span></p>`;
+                
+                if (selectedFields.includes("saturated-fat_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.saturated-fat_100g ?? "Non disponible"}</span></p>`;
+                
+                if (selectedFields.includes("carbohydrates_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.carbohydrates_100g ?? "Non disponible"}</span></p>`;
+                if (selectedFields.includes("sugars_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.sugars_100g ?? "Non disponible"}</span></p>`;
+                if (selectedFields.includes("fiber_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.fiber_100g ?? "Non disponible"}</span></p>`;
+                if (selectedFields.includes("proteins_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.proteins_100g ?? "Non disponible"}</span></p>`;
+                if (selectedFields.includes("salt_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.salt_100g ?? "Non disponible"}</span></p>`;
+                if (selectedFields.includes("water_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.water_100g ?? "Non disponible"}</span></p>`;
+                if (selectedFields.includes("vitamin-c_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.vitamin-c_100g ?? "Non disponible"}</span></p>`;
+                if (selectedFields.includes("vitamin-b12_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.vitamin-b12_100g ?? "Non disponible"}</span></p>`;
+                if (selectedFields.includes("vitamin-b12_100g"))
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.zinc_100g ?? "Non disponible"}</span></p>`;
+
                 if (selectedFields.includes("indicators")) {
                     const levels = prod.nutrient_levels || {};
                     const indicators = Object.entries(levels)
@@ -216,7 +304,7 @@ Quagga.onDetected(async data => {
 const openBtn = document.getElementById("open-settings");
 const closeBtn = document.getElementById("close-settings");
 const modal = document.getElementById("modal-settings");
-const form = document.getElementById("settings-form");
+// const form = document.getElementById("settings-form");
 
 // Display modale ( with differents choices )
 openBtn.addEventListener("click", () => {
@@ -233,11 +321,46 @@ closeBtn.addEventListener("click", () => {
     modal.classList.add("hidden");
 });
 
-// Save pref 
-form.addEventListener("submit", e => {
+// Add dynamic fields + search
+const form = document.getElementById("settings-form");
+const searchInput = document.getElementById("settings-search");
+
+function renderSettingsForm(filter = "") {
+    const prefs = getPreferences();
+    form.innerHTML = "";
+
+    FIELDS.forEach(f => {
+        if (f.label.toLowerCase().includes(filter.toLowerCase())) {
+        const checked = prefs.includes(f.id) ? "checked" : "";
+        const label = document.createElement("label");
+        label.innerHTML = `
+            <input type="checkbox" name="${f.id}" id="${f.id}" ${checked}>
+            <span>${f.label}</span>
+        `;
+        form.appendChild(label);
+        }
+    });
+}
+
+// Dynamic searchbar 
+searchInput.addEventListener("input", (e) => {
+    renderSettingsForm(e.target.value);
+});
+
+// Open modale 
+document.getElementById("open-settings").addEventListener("click", () => {
+    document.getElementById("modal-settings").classList.remove("hidden");
+    renderSettingsForm();
+});
+
+// Close modale 
+document.getElementById("close-settings").addEventListener("click", () => {
+    document.getElementById("modal-settings").classList.add("hidden");
+});
+
+form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const formData = new FormData(form);
-    const checked = FIELDS.map(f => f.id).filter(id => formData.get(id) === "on");
-    setPreferences(checked);
-    modal.classList.add("hidden");
+    const selected = Array.from(form.querySelectorAll("input[type='checkbox']:checked")).map(el => el.name);
+    setPreferences(selected);
+    document.getElementById("modal-settings").classList.add("hidden");
 });
