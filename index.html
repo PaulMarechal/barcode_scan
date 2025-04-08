@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>US or not US 🇺🇸</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://unpkg.com/@ericblade/quagga2/dist/quagga.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/wikidata-sdk@6.0.0/dist/wikidata-sdk.min.js"></script>
+</head>
+<body>
+  <header>
+    <h1>US or not US 🇺🇸</h1>
+    <button id="open-settings">Modifier</button>
+  </header>
+
+  <div id="scanner-container">
+    <svg class="center-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" width="250" height="250" stroke-width="1"> 
+      <path d="M4 7v-1a2 2 0 0 1 2 -2h2"></path> 
+      <path d="M4 17v1a2 2 0 0 0 2 2h2"></path> 
+      <path d="M16 4h2a2 2 0 0 1 2 2v1"></path> 
+      <path d="M16 20h2a2 2 0 0 0 2 -2v-1"></path> 
+      <path d="M5 11h1v2h-1z"></path> 
+      <path d="M10 11l0 2"></path> 
+      <path d="M14 11h1v2h-1z"></path> 
+      <path d="M19 11l0 2"></path> 
+    </svg> 
+  </div>
+
+  <div id="results"></div>
+
+  <div id="modal-settings" class="modal hidden">
+    <div class="modal-content">
+      <h2>Infos à afficher</h2>
+      <form id="settings-form">
+        <label><input type="checkbox" name="calories"/> Calories</label>
+        <label><input type="checkbox" name="additifs"/> Additifs</label>
+        <label><input type="checkbox" name="allergenes"/> Allergènes</label>
+        <label><input type="checkbox" name="eco"/> Empreinte carbone</label>
+        <button type="submit">Enregistrer</button>
+      </form>
+      <button id="close-settings">Fermer</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
