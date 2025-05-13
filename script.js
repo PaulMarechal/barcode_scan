@@ -16,17 +16,17 @@ const FIELDS = [
     { id: 'packaging_tags', label: 'Emballage', defaultVisible: false },
     { id: 'recycling', label: 'Recyclable ?', defaultVisible: false },
     { id: 'alcohol_100g', label: 'Alcool / 100g', defaultVisible: false },
-    { id: 'energy-kcal_100g', label: 'Énergie (kcal/100g)', defaultVisible: false },
+    { id: 'energy_kcal_100g', label: 'Énergie (kcal/100g)', defaultVisible: false },
     { id: 'fat_100g', label: 'Lipides / 100g', defaultVisible: false },
-    { id: 'saturated-fat_100g', label: 'Graisses saturées / 100g', defaultVisible: false },
+    { id: 'saturated_fat_100g', label: 'Graisses saturées / 100g', defaultVisible: false },
     { id: 'carbohydrates_100g', label: 'Glucides / 100g', defaultVisible: false },
     { id: 'sugars_100g', label: 'Sucres / 100g', defaultVisible: false },
     { id: 'fiber_100g', label: 'Fibres / 100g', defaultVisible: false },
     { id: 'proteins_100g', label: 'Protéines / 100g', defaultVisible: false },
     { id: 'salt_100g', label: 'Sel / 100g', defaultVisible: false },
     { id: 'water_100g', label: 'Eau / 100g', defaultVisible: false },
-    { id: 'vitamin-c_100g', label: 'Vitamine C / 100g', defaultVisible: false },
-    { id: 'vitamin-b12_100g', label: 'Vitamine B12 / 100g', defaultVisible: false },
+    { id: 'vitamin_c_100g', label: 'Vitamine C / 100g', defaultVisible: false },
+    { id: 'vitamin_b12_100g', label: 'Vitamine B12 / 100g', defaultVisible: false },
     { id: 'zinc_100g', label: 'Zinc / 100g', defaultVisible: false },
     { id: 'cholesterol_100g', label: 'Cholestérol / 100g', defaultVisible: false },
     { id: 'calcium_100g', label: 'Calcium / 100g', defaultVisible: false },
@@ -242,13 +242,13 @@ Quagga.onDetected(async data => {
                     infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.alcohol_100g ?? "Non disponible"}</span></p>`;
                 
                 if (selectedFields.includes("energy-kcal_100g"))
-                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.energy-kcal_100g ?? "Non disponible"}</span></p>`;
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.energy_kcal_100g ?? "Non disponible"}</span></p>`;
                 
                 if (selectedFields.includes("fat_100g"))
                     infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.fat_100g ?? "Non disponible"}</span></p>`;
                 
                 if (selectedFields.includes("saturated-fat_100g"))
-                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.saturated-fat_100g ?? "Non disponible"}</span></p>`;
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.saturated_fat_100g ?? "Non disponible"}</span></p>`;
                 
                 if (selectedFields.includes("carbohydrates_100g"))
                     infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.carbohydrates_100g ?? "Non disponible"}</span></p>`;
@@ -263,9 +263,9 @@ Quagga.onDetected(async data => {
                 if (selectedFields.includes("water_100g"))
                     infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.water_100g ?? "Non disponible"}</span></p>`;
                 if (selectedFields.includes("vitamin-c_100g"))
-                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.vitamin-c_100g ?? "Non disponible"}</span></p>`;
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.vitamin_c_100g ?? "Non disponible"}</span></p>`;
                 if (selectedFields.includes("vitamin-b12_100g"))
-                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.vitamin-b12_100g ?? "Non disponible"}</span></p>`;
+                    infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.vitamin_b12_100g ?? "Non disponible"}</span></p>`;
                 if (selectedFields.includes("vitamin-b12_100g"))
                     infosHTML += `<p class="text-display-style"><span class="title-text">Calcium / 100g :</span><span class="result-text">${prod.nutriments?.zinc_100g ?? "Non disponible"}</span></p>`;
 
